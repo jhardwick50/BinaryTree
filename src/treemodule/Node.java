@@ -11,20 +11,23 @@ package treemodule;
  */
 public class Node {
 
-    private Node rightChild;
-    private Node leftChild;
+    protected Node parent;
+    protected Node rightChild;
+    protected Node leftChild;
     private String word;
-    private int occurences;
+    protected int occurences = 1;
 
-    protected Node(String word) {
+    protected Node(Node parent, String word) {
+        this.parent = parent;
         this.word = word;
+        
     }
 
     protected boolean insert(String word) {
 
         if (word.compareTo(this.word) <= -1) {
             if (leftChild == null) {
-                this.leftChild = new Node(word);
+                this.leftChild = new Node(this, word);
                 return true;
             } else {
                 this.leftChild.insert(word);
@@ -32,7 +35,7 @@ public class Node {
             }
         } else if (word.compareTo(this.word) >= 1) {
             if (this.rightChild == null) {
-                this.rightChild = new Node(word);
+                this.rightChild = new Node(this, word);
                 return true;
             } else {
                 this.rightChild.insert(word);
@@ -45,31 +48,27 @@ public class Node {
         }
     }
 
-//    protected boolean find(String word) {
-//        boolean found = false;
-//        if (this == null) {
-//            return false;
-//        } else {
-//            if (word == this.word) {
-//                return true;
-//            } else {
-//                (word < this.word && this.leftChild != null)
-//            }
-//            {
-//                found = this.leftChild.find(word);
-//            }
-//            else (word > this.word && this.rightChild != null)
-//            
-//            {
-//                found = this.rightChild.find(word);
-//            }
-//            return found;
-//        }
-//    }
+    protected Node find(String word) {
+        if (this.word.equals(word)) {
+            return this;
+        }
+        else {
+            Node node = null;
+            if (leftChild != null) {
+                node = leftChild.find(word);
+            }
+            if (node == null && rightChild != null) {
+                node = rightChild.find(word);
+            }
+                
+            return node;
+        }
+        
+    }
 
     protected void preorder() {
         
-            System.out.println(this.word);
+            System.out.print(this.word + "(" + occurences + ") ");
             if (this.leftChild != null) {
                 this.leftChild.preorder();
             } 
@@ -85,7 +84,7 @@ public class Node {
             if (this.leftChild != null) {
                 this.leftChild.inorder();
             } 
-            System.out.println(this.word);
+            System.out.print(this.word + "(" + occurences + ") ");
             if (this.rightChild != null) {
                 this.rightChild.inorder();
             }
@@ -99,7 +98,56 @@ public class Node {
             if (this.rightChild != null) {
                 this.rightChild.postorder();
             }
-            System.out.println(this.word);
+            System.out.print(this.word + "(" + occurences + ") ");
+    }
+
+    public Node findSmallest() {
+        if (leftChild == null) {
+            return this;
+        } else {
+            return leftChild.findSmallest();
+        }
+    }
+    
+    public Node findLargest() {
+        if (rightChild == null) {
+            return this;
+        } else {
+            return rightChild.findLargest();
+        }
+    }
+    
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    
+    
+    public Node getRightChild() {
+        return rightChild;
+    }
+
+    public void setRightChild(Node rightChild) {
+        this.rightChild = rightChild;
+        this.rightChild.setParent(this);
+    }
+
+    public Node getLeftChild() {
+        return leftChild;
+    }
+
+    public void setLeftChild(Node leftChild) {
+        this.leftChild = leftChild;
+        this.leftChild.setParent(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" + "word=" + word + '}';
     }
 
 }
