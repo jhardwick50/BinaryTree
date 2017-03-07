@@ -24,7 +24,7 @@ public class TreeModule {
             tree.insert(result[x]);
             
         }
-        
+        System.out.println("Jason Hardwick\n CIS 314\n Module 3\n\n");
         System.out.println("Initial Tree\n______________________________________\n");
         printTree(tree);  
         System.out.println("\n______________________________________\n\nDelete Single \"I\" \n______________________________________\n");

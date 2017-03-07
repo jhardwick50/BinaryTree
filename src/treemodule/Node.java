@@ -103,16 +103,20 @@ public class Node {
     }
 
     public Node findSmallest() {
-        if (leftChild == null) {
+        if (leftChild == null && rightChild == null) {
             return this;
+        } else if (leftChild == null) {
+            return rightChild.findSmallest();
         } else {
             return leftChild.findSmallest();
         }
     }
     
     public Node findLargest() {
-        if (rightChild == null) {
+        if (leftChild == null && rightChild == null) {
             return this;
+        } else if (rightChild == null) {
+            return leftChild.findLargest();
         } else {
             return rightChild.findLargest();
         }
@@ -126,8 +130,10 @@ public class Node {
         
         this.parent = parent;
     }
-
-    
+       
+    public boolean isLeftChildOfParent() {
+        return parent != null && parent.getLeftChild() == this;
+    }
     
     public Node getRightChild() {
         return rightChild;
@@ -136,7 +142,9 @@ public class Node {
     public void setRightChild(Node rightChild) {
         
         this.rightChild = rightChild;
-        this.rightChild.setParent(this);
+        if (this.rightChild != null) {
+            this.rightChild.setParent(this);
+        }
     }
 
     public Node getLeftChild() {
@@ -146,7 +154,9 @@ public class Node {
     public void setLeftChild(Node leftChild) {
         
         this.leftChild = leftChild;
-        this.leftChild.setParent(this);
+        if (this.leftChild != null) {
+            this.leftChild.setParent(this);
+        }
     }
 
     @Override
