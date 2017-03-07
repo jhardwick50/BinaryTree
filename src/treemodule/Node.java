@@ -72,6 +72,7 @@ public class Node {
             if (this.leftChild != null) {
                 this.leftChild.preorder();
             } 
+           
             if (this.rightChild != null) {
                 this.rightChild.preorder();
             }
@@ -122,6 +123,7 @@ public class Node {
     }
 
     public void setParent(Node parent) {
+        
         this.parent = parent;
     }
 
@@ -132,6 +134,7 @@ public class Node {
     }
 
     public void setRightChild(Node rightChild) {
+        
         this.rightChild = rightChild;
         this.rightChild.setParent(this);
     }
@@ -141,6 +144,7 @@ public class Node {
     }
 
     public void setLeftChild(Node leftChild) {
+        
         this.leftChild = leftChild;
         this.leftChild.setParent(this);
     }

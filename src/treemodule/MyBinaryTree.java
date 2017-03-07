@@ -74,6 +74,7 @@ public class MyBinaryTree {
     
     private void removeNode(Node node) {
         Node replacement = null;
+        
         if(node.getRightChild() != null) {
             
             replacement = node.getRightChild().findSmallest();
@@ -84,13 +85,32 @@ public class MyBinaryTree {
             
            } 
         
+        
         // 1. Left child of parent of "replacement" should be set to null if not null, otherwise right child of parent of "replacement" should be set to null
         // 2. Right child of parent of "node" (if not null) should be set to "replacement"
         // 3. Parent of "replacement" should be set to parent of "node" (already done with step 2 in Node.setRightChild())
         // 4. Left child of "replacement" should be set to left child of "node"
         // 5. Right child of "replacement" should be set to right child of "node"
+        Node newParent = node.getParent();
+        Node oldParent = replacement.getParent();
         if (replacement != null) {
-           //TODO: Follow rules
+           //step 1
+           if (oldParent.leftChild != null){
+             oldParent.leftChild = null;
+            }
+            else {
+                 oldParent.rightChild = null;
+            }
+           //step 2 and 3
+            if (newParent.rightChild != null) {
+                newParent.rightChild = replacement;
+            //step 4
+                replacement.leftChild = node.leftChild;
+                replacement.rightChild = node.rightChild;
+            }
+            
+            
+                
         }
     }
 }
